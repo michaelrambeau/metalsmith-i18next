@@ -24,6 +24,19 @@ Metalsmith(__dirname)
 		if (err) console.error(err.stack)
 	})
 
+Also handlebars is supported as engine:
+
+Metalsmith(__dirname)
+	.use(i18next(
+		pattern: '**/*.hbs',
+		locales: ['en','fr'],
+		namespaces: ['public'],
+		engine: 'handlebars'
+	))
+	.build(function(err, files){
+		if (err) console.error(err.stack)
+	})
+
 Input                                                   Output
 -----                                                   ------
 .                                                       .
@@ -106,6 +119,27 @@ tpath('/products/widget.html')   // => /products/widget--<locale>.html
 
 ```
 <hr>
+
+#### Interpolation
+You can use variables in the locale files:
+
+```
+{
+	"hello": "Hello __name__"
+}
+```
+
+then pass variable values to the helper:
+
+(hamlc)
+```
+= @tt('hello', {"name": 'John Doe'})
+```
+
+(handlebars)
+```
+{{{t "hello" name="John Doe"}}}
+```
 
 
 # License

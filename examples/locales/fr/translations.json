@@ -4,6 +4,6 @@
 	},
 
 	"home": {
-		"hello": "Bonjour"
+		"hello": "Bonjour __name__"
 	}
 }
