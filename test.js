@@ -147,8 +147,8 @@ describe('metalsmith-i18next', function(){
 			namespace = prop('translations'),
 			fn        = helpers(i18next, {path, prefix, locale, namespace})
 
-		fn.t('translations:home.hello',{lng:'fr'}).should.equal('Bonjour')
-		fn.tt('hello').should.equal('Bonjour')
+		fn.t('translations:home.hello',{lng:'fr'}).should.equal('Bonjour __name__')
+		fn.tt('hello', {"name": "John Doe"}).should.equal('Bonjour John Doe')
 		fn.tt('foo').should.equal('Fou!!!')
 		fn.tt('bar').should.equal('[home,common].bar')
 		done()
@@ -174,8 +174,8 @@ describe('metalsmith-i18next', function(){
 			should.exist(enFile)
 			should.exist(frFile)
 
-			enFile.contents.toString('utf8').should.equal('Hello')
-			frFile.contents.toString('utf8').should.equal('Bonjour')
+			enFile.contents.toString('utf8').should.equal('Hello John Doe')
+			frFile.contents.toString('utf8').should.equal('Bonjour John Doe')
 
 			should.exist(enFile.i18nBootstrap)
 			should.exist(frFile.i18nBootstrap)
@@ -186,8 +186,8 @@ describe('metalsmith-i18next', function(){
 			should.exist(enFile.i18nResStore)
 			should.exist(frFile.i18nResStore)
 
-			enFile.i18nResStore.should.eql({en: {translations: {common:{foo:'Foo!!!'}, home: {hello: 'Hello'}},foo:{foo:{bar:'Foobar'}}}})
-			frFile.i18nResStore.should.eql({fr: {translations: {common:{foo:'Fou!!!'}, home: {hello: 'Bonjour'}},foo:{foo:{bar:'Foobar!!'}}}})
+			enFile.i18nResStore.should.eql({en: {translations: {common:{foo:'Foo!!!'}, home: {hello: 'Hello __name__'}},foo:{foo:{bar:'Foobar'}}}})
+			frFile.i18nResStore.should.eql({fr: {translations: {common:{foo:'Fou!!!'}, home: {hello: 'Bonjour __name__'}},foo:{foo:{bar:'Foobar!!'}}}})
 		}
 	))
 
@@ -207,8 +207,8 @@ describe('metalsmith-i18next', function(){
 			should.exist(enFile)
 			should.exist(frFile)
 
-			enFile.contents.toString('utf8').should.equal('Hello')
-			frFile.contents.toString('utf8').should.equal('Bonjour')
+			enFile.contents.toString('utf8').should.equal('Hello John Doe')
+			frFile.contents.toString('utf8').should.equal('Bonjour John Doe')
 		}
 	))
 
