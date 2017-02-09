@@ -122,15 +122,16 @@ describe('metalsmith-i18next', function(){
 
 	it('should localize the path as expected', function(done){
 
-		var path   = prop(':locale/:file'),
+		var path   = () => ':locale/:file',
 			locale = prop('en'),
 			tpath  = helpers(i18next, {path, locale}).tpath
-
 		tpath('/').should.equal('/en')
 		tpath('/index.html').should.equal('/en/index.html')
 		tpath('/index.html','fr').should.equal('/fr/index.html')
 
-		path(':dir/:name-:locale:ext:query:hash')
+		var path   = () => ':dir/:name-:locale:ext:query:hash',
+			locale = prop('en'),
+			tpath  = helpers(i18next, {path, locale}).tpath
 		tpath('/foo/bar.php?filter=cars#heading').should.equal('/foo/bar-en.php?filter=cars#heading')
 		
 		locale('fr')
@@ -141,7 +142,7 @@ describe('metalsmith-i18next', function(){
 
 	it('should translate as expected', function(done){
 
-		var path      = prop(':locale/:file'),
+		var path   = () => ':locale/:file',
 			locale    = prop('fr'),
 			prefix    = prop(['home','common']),
 			namespace = prop('translations'),
