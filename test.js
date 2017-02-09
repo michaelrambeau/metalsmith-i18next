@@ -133,7 +133,7 @@ describe('metalsmith-i18next', function(){
 			locale = prop('en'),
 			tpath  = helpers(i18next, {path, locale}).tpath
 		tpath('/foo/bar.php?filter=cars#heading').should.equal('/foo/bar-en.php?filter=cars#heading')
-		
+
 		locale('fr')
 		tpath('/foo/bar.php?filter=cars#heading').should.equal('/foo/bar-fr.php?filter=cars#heading')
 
@@ -161,7 +161,7 @@ describe('metalsmith-i18next', function(){
 	// ------------------------------------------------------------------------
 
 	it('should create two localised directories each with index.txt', metalsmithTest(
-		{		
+		{
 			pattern: '**/*.hamlc',
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
@@ -198,7 +198,7 @@ describe('metalsmith-i18next', function(){
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
 			namespaces: ['translations'],
-			path: ':dir/:name-:locale:ext'
+			path: () => ':dir/:name-:locale:ext'
 		},
 		function(files) {
 
@@ -219,7 +219,7 @@ describe('metalsmith-i18next', function(){
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
 			namespaces: ['translations'],
-			path: ':dir/:name-:locale:ext'
+			path: () => ':dir/:name-:locale:ext'
 		},
 		function(files) {
 
@@ -243,16 +243,16 @@ describe('metalsmith-i18next', function(){
 
 
 	it('should allow tpath to override the locale', metalsmithTest(
-		{		
+		{
 			pattern: '**/*.hamlc',
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
-			namespaces: ['translations']
+			namespaces: ['translations'],
+			path: () => ':locale/:file'
 		},
 		function(files) {
 
 			var enFile = files['en/index.txt']
-
 			should.exist(enFile)
 
 			enFile.tpath('/toto.txt').should.equal('/en/toto.txt')
